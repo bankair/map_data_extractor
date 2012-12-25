@@ -1,13 +1,11 @@
 require 'test/unit'
-require 'rmagick'
-
-require_relative '../lib/nodes_extractor'
+require 'map_data_extractor'
 
 
 class NodesExtractorTest < Test::Unit::TestCase
   def test_find_nodes_from_image
-    image  = Magick::Image.read('map_descriptors/00_nodes.png')[0]
-    finder = NodesExtractor.new(image)
+    image  = Magick::Image.read('test/00_nodes.png')[0]
+    finder = MapDataExtractor::NodesExtractor.new(image)
 
     assert_equal [
       { name: '1', points: [ [1,1], [2,1], [1,2], [2,2] ] },

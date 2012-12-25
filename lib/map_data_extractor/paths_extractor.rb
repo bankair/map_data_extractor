@@ -1,4 +1,4 @@
-class PathsExtractor
+class MapDataExtractor::PathsExtractor
   def initialize(image, nodes)
     @image = image
     @view  = image.view(0, 0, image.columns, image.rows)

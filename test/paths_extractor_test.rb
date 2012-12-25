@@ -1,13 +1,11 @@
 require 'test/unit'
-require 'rmagick'
-
-require_relative '../lib/paths_extractor'
+require 'map_data_extractor'
 
 
 class PathsExtractorTest < Test::Unit::TestCase
   def test_find_paths_from_image
-    image  = Magick::Image.read('map_descriptors/00_paths.png')[0]
-    finder = PathsExtractor.new(image, nodes = [
+    image  = Magick::Image.read('test/00_paths.png')[0]
+    finder = MapDataExtractor::PathsExtractor.new(image, nodes = [
       { name: '1', points: [ [1,1], [2,1], [1,2], [2,2] ] },
       { name: '2', points: [ [7,3], [8,3], [7,4], [8,4] ] },
       { name: '3', points: [ [1,7], [2,7], [1,8], [2,8] ] }

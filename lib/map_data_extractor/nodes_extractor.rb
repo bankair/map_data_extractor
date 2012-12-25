@@ -1,4 +1,4 @@
-class NodesExtractor
+class MapDataExtractor::NodesExtractor
   def initialize(image)
     @image = image
   end
