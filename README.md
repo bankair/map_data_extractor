@@ -1,8 +1,17 @@
-# Map data extractors
+# Map data extractor
 
 These tools are used to extract data (nodes and paths) from special images called **map descriptors**.
 
 I created these tools for my game project Seelies.
+
+
+## Install
+
+You can install the gem from the `.gem` file included in this repository.
+
+```
+gem install ./map_data_extractor-x.x.x.gem
+```
 
 
 ## How to use
@@ -26,21 +35,34 @@ Both starting and ending points of a path must be *under* a different node.
 If many paths start from a same node, use different colors to draw them (and keep it for the rest of the path): two pixels of a same color must not be found *under* a same node.
 
 
-### Extract data to a file
+### Extract nodes from nodes descriptor image
 
-```
-ruby tasks/extract_nodes_and_paths.rb map_descriptors/foo tmp/foo
-```
+``` ruby
+require 'map_data_extractor'
 
-The descriptor path `map_descriptors/foo` assumes that the existence of files `map_descriptors/foo_nodes.png` and `map_descriptors/foo_paths.png`.
+image  = Magick::Image.read('test/00_nodes.png')[0]
+finder = MapDataExtractor::NodesExtractor.new(image)
 
-The data path `tmp/foo` assumes that the existence of directory `tmp`. The files `tmp/foo_nodes.yml` and `tmp/foo_paths.yml` are created.
-
-
-### Reading data from a file
-
-```
-ruby tasks/read_extracted_nodes_and_paths.rb tmp/foo
+finder.nodes # => [
+  { name: '1', points: [ [1,1], ... ] },
+  { name: '2', points: [ [7,3], ... },
+  ...
+]
 ```
 
-The data path `tmp/foo` assumes the existence of files `tmp/foo_nodes.yml` and `tmp/foo_paths.yml`.
+
+### Extract paths from paths descriptor image and list of nodes
+
+``` ruby
+require 'map_data_extractor'
+
+nodes  = ... # As returned by MapDataExtractor::NodesExtractor.
+image  = Magick::Image.read('test/00_paths.png')[0]
+finder = MapDataExtractor::PathsExtractor.new(image, nodes)
+
+finder.paths # => [
+  { from: nodes[0], to: nodes[1], points: [ [2,2], ... ] },
+  { from: nodes[1], to: nodes[0], points: [ [7,3], ... ] },
+  ...
+]
+```
