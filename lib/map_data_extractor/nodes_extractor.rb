@@ -21,11 +21,25 @@ class MapDataExtractor::NodesExtractor
         locked_pixels[bottom]       = true
         locked_pixels[right_bottom] = true
 
-        nodes << { name: index.to_s, points: [ current, right, bottom, right_bottom ] }
+        nodes << { name: index.to_s, points: [ current, right, bottom, right_bottom ], color: color_code(pixel) }
         index += 1
       end
     end
 
     nodes
+  end
+
+
+  private
+
+  def color_code(pixel)
+    # Rmagick uses 16-bit depth by default. 8-bit in some configuration.
+    divider = Magick::QuantumDepth == 16 ? 257 : 1
+    [
+      '#',
+      (pixel.red   / divider).to_s(16).rjust(2, '0'),
+      (pixel.green / divider).to_s(16).rjust(2, '0'),
+      (pixel.blue  / divider).to_s(16).rjust(2, '0')
+    ].join
   end
 end

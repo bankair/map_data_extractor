@@ -8,9 +8,9 @@ class NodesExtractorTest < Test::Unit::TestCase
     finder = MapDataExtractor::NodesExtractor.new(image)
 
     assert_equal [
-      { name: '1', points: [ [1,1], [2,1], [1,2], [2,2] ] },
-      { name: '2', points: [ [7,3], [8,3], [7,4], [8,4] ] },
-      { name: '3', points: [ [1,7], [2,7], [1,8], [2,8] ] }
+      { name: '1', points: [ [1,1], [2,1], [1,2], [2,2] ], color: '#000000' },
+      { name: '2', points: [ [7,3], [8,3], [7,4], [8,4] ], color: '#999999' },
+      { name: '3', points: [ [1,7], [2,7], [1,8], [2,8] ], color: '#000000' }
     ], finder.nodes
   end
 end
