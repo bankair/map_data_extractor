@@ -22,8 +22,10 @@ class MapDataExtractor::PathsExtractor
     paths = []
     start_points.each do |node, start_points|
       start_points.each do |starting_point|
-        color = @image.pixel_color(*starting_point)
-        steps = [ starting_point ]
+        x, y       = starting_point
+        color      = @image.pixel_color(*starting_point)
+        color_code = MapDataExtractor::color_code(@view[y][x])
+        steps      = [ starting_point ]
 
         begin
           point = point_with_colour_around(color, steps[-1], steps[-2])
@@ -31,7 +33,7 @@ class MapDataExtractor::PathsExtractor
         end while point
 
         arrival_node = node_for_point(steps[-1], @nodes)
-        paths << { from: node, to: arrival_node, points: steps }
+        paths << { from: node, to: arrival_node, points: steps, color: color_code }
       end
     end
 
