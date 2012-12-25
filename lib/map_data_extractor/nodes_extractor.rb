@@ -12,7 +12,7 @@ class MapDataExtractor::NodesExtractor
     @image.each_pixel do |pixel, x, y|
       current = [ x, y ]
 
-      if black?(pixel) && !locked_pixels.include?(current)
+      if pixel.opacity == 0 && !locked_pixels.include?(current)
         right        = [ x + 1, y     ]
         bottom       = [ x,     y + 1 ]
         right_bottom = [ x + 1, y + 1 ]
@@ -27,12 +27,5 @@ class MapDataExtractor::NodesExtractor
     end
 
     nodes
-  end
-
-
-  private
-
-  def black?(pixel)
-    pixel.red == 0 && pixel.green == 0 && pixel.blue == 0 && pixel.opacity == 0
   end
 end

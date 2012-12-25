@@ -21,7 +21,7 @@ In order to use these tools, you need two images: one to describe nodes and one 
 
 ### Nodes descriptor
 
-Nodes descriptors are transparent PNG containing blocks of 4*4 fully opaque black pixels.
+Nodes descriptors are transparent PNG containing blocks of 4*4 fully opaque pixels.
 
 This is image is virtually placed on top of paths image during process so some path pixels are said to be *under* a node.
 
