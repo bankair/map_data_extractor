@@ -44,8 +44,8 @@ image  = Magick::Image.read('test/00_nodes.png')[0]
 finder = MapDataExtractor::NodesExtractor.new(image)
 
 finder.nodes # => [
-  { name: '1', points: [ [1,1], ... ] },
-  { name: '2', points: [ [7,3], ... },
+  { name: '1', points: [ [1,1], ... ], color: '#000000' },
+  { name: '2', points: [ [7,3], ... ], color: '#CCCCCC' },
   ...
 ]
 ```
@@ -61,8 +61,8 @@ image  = Magick::Image.read('test/00_paths.png')[0]
 finder = MapDataExtractor::PathsExtractor.new(image, nodes)
 
 finder.paths # => [
-  { from: nodes[0], to: nodes[1], points: [ [2,2], ... ] },
-  { from: nodes[1], to: nodes[0], points: [ [7,3], ... ] },
+  { from: nodes[0], to: nodes[1], points: [ [2,2], ... ], color: '#FFFF00' },
+  { from: nodes[1], to: nodes[0], points: [ [7,3], ... ], color: '#0000FF' },
   ...
 ]
 ```
