@@ -1,8 +1,8 @@
 # Map data extractor
 
-These tools are used to extract data (nodes and paths) from special images called **map descriptors**.
+These tools are used to extract data (nodes, paths, borders) from special images called **map descriptors**.
 
-I created these tools for my game project Seelies.
+I created these tools for the specific needs of my game project Seelies.
 
 
 ## Install
@@ -16,26 +16,17 @@ gem install ./map_data_extractor-x.x.x.gem
 
 ## How to use
 
-In order to use these tools, you need two images: one to describe nodes and one for paths.
+
+### Nodes extractor
+
+The goal of the Nodes extractor is to retrieve for each node drawn on the map descriptor the coordinates of the node, its color and a unique name.
+
+Note that the name is given according to the order of apparition of the node on the image (from left to right, top to bottom) so it may change when you change the image.
+
+A nodes descriptor is a transparent PNG containing blocks of 4*4 fully opaque pixels.
 
 
-### Nodes descriptor
-
-Nodes descriptors are transparent PNG containing blocks of 4*4 fully opaque pixels.
-
-This is image is virtually placed on top of paths image during process so some path pixels are said to be *under* a node.
-
-
-### Paths descriptor
-
-Paths descriptors are transparent PNG containing paths composed of contiguous pixels without blotch : a pixel can only have two pixels of the same color around it or only one if this pixel is *under* a node.
-
-Both starting and ending points of a path must be *under* a different node.
-
-If many paths start from a same node, use different colors to draw them (and keep it for the rest of the path): two pixels of a same color must not be found *under* a same node.
-
-
-### Extract nodes from nodes descriptor image
+#### Example usage
 
 ``` ruby
 require 'map_data_extractor'
@@ -51,7 +42,20 @@ finder.nodes # => [
 ```
 
 
-### Extract paths from paths descriptor image and list of nodes
+### Paths extractor
+
+The goal of the Paths extractor is to retrieve the coordinates of every paths drawn on the descriptor along with its color and the two nodes the path is linking.
+
+This extractor uses the output of the Nodes extractor as its input. We use it to find overlaps between the nodes pixels and the paths pixels.
+
+A paths descriptor is a transparent PNG containing paths composed of contiguous pixels without any blotch : a pixel can only have two pixels of the same color around it, or only one if this pixel overlaps with a node pixel.
+
+Both starting and ending points of a path must overlap with a different node.
+
+If many paths start from a same node, use different colors to draw them (and keep it for the rest of the path): two pixels with the same color must not overlap with a same node.
+
+
+#### Example usage
 
 ``` ruby
 require 'map_data_extractor'
@@ -63,6 +67,29 @@ finder = MapDataExtractor::PathsExtractor.new(image, nodes)
 finder.paths # => [
   { from: nodes[0], to: nodes[1], points: [ [2,2], ... ], color: '#FFFF00' },
   { from: nodes[1], to: nodes[0], points: [ [7,3], ... ], color: '#0000FF' },
+  ...
+]
+```
+
+
+### Borders extractor
+
+The goal of the border extractor is to retrieve the coordinates of every area border drawn on the descriptor.
+
+A borders descriptor is a transparent PNG containing closed paths composed of contiguous pixels without any blotch : a pixel can only have to pixels of the same color around it. Such an area must not be drawn inside another one. All pixels of a border must have the same color. A color must not be used in more than one border.
+
+
+#### Example usage
+
+``` ruby
+require 'map_data_extractor'
+
+image  = Magick::Image.read('test/00_borders.png')[0]
+finder = MapDataExtractor::BordersExtractor.new(image)
+
+finder.borders # => [
+  { name: '1', color: '#d40000', points: [ [2,1], ... ] },
+  { name: '2', color: '#46e600', points: [ [6,5], ... ] },
   ...
 ]
 ```

@@ -1,4 +1,7 @@
 module MapDataExtractor
+  VERSION = '0.3.0'
+
+
   def self.color_code(pixel)
     # Rmagick uses 16-bit depth by default. 8-bit in some configuration.
     divider = Magick::QuantumDepth == 16 ? 257 : 1
@@ -10,6 +13,7 @@ module MapDataExtractor
     ].join
   end
 end
+
 
 require 'rmagick'
 require 'map_data_extractor/nodes_extractor'
