@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://'
 
   s.add_dependency('rmagick', '>= 2.13.1')
+  s.add_dependency('rake', '>= 10.1.0')
 end

@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    map_data_extractor (0.2.0)
+      rake (>= 10.1.0)
+      rmagick (>= 2.13.1)
+
+GEM
+  specs:
+    rake (10.1.0)
+    rmagick (2.13.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  map_data_extractor!
