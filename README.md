@@ -93,3 +93,26 @@ finder.borders # => [
   ...
 ]
 ```
+
+
+### Neighborhoods extractor
+
+The goal of the neighborhoods extractor is too match nodes against borders to know which areas are close to each node.
+
+
+#### Example usage
+
+``` ruby
+require 'map_data_extractor'
+
+nodes   = ... # As returned by MapDataExtractor::NodesExtractor.
+borders = ... # As returned by MapDataExtractor::BordersExtractor.
+radius  = ... # A number of pixels to define the area around the node.
+finder  = MapDataExtractor::NeighborhoodsExtractor.new(nodes, borders, radius)
+
+finder.neighborhoods # => [
+  { name: '1', node: nodes[0], border: borders[0] },
+  { name: '2', node: nodes[1], border: borders[0] },
+  ...
+]
+```
