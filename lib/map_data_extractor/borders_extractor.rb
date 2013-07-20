@@ -1,5 +1,3 @@
-require 'timeout'
-
 class MapDataExtractor::BordersExtractor
   def initialize(image)
     @image = image
