@@ -25,6 +25,7 @@ Note that the name is given according to the order of apparition of the node on 
 
 A nodes descriptor is a transparent PNG containing blocks of 4*4 fully opaque pixels.
 
+<img src="examples/nodes.png" />
 
 #### Example usage
 
@@ -54,6 +55,7 @@ Both starting and ending points of a path must overlap with a different node.
 
 If many paths start from a same node, use different colors to draw them (and keep it for the rest of the path): two pixels with the same color must not overlap with a same node.
 
+<img src="examples/paths.png" />
 
 #### Example usage
 
@@ -78,6 +80,7 @@ The goal of the border extractor is to retrieve the coordinates of every area bo
 
 A borders descriptor is a transparent PNG containing closed paths composed of contiguous pixels without any blotch : a pixel can only have to pixels of the same color around it. Such an area must not be drawn inside another one. All pixels of a border must have the same color. A color must not be used in more than one border.
 
+<img src="examples/borders.png" />
 
 #### Example usage
 
@@ -116,3 +119,8 @@ finder.neighborhoods # => [
   ...
 ]
 ```
+
+
+## Test
+
+Just run `rake test` from the root folder of the project.
