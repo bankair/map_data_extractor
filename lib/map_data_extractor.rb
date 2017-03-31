@@ -4,7 +4,7 @@ module MapDataExtractor
 
   def self.color_code(pixel)
     # Rmagick uses 16-bit depth by default. 8-bit in some configuration.
-    divider = Magick::QuantumDepth == 16 ? 257 : 1
+    divider = Magick::MAGICKCORE_QUANTUM_DEPTH == 16 ? 257 : 1
     [
       '#',
       (pixel.red   / divider).to_s(16).rjust(2, '0'),
