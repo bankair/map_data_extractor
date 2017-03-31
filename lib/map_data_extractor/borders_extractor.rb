@@ -35,23 +35,31 @@ class MapDataExtractor::BordersExtractor
 
   private
 
+  NEIGHBOR_OFFSETS = [
+    [-1, -1],
+    [ 0, -1],
+    [ 1, -1],
+    [-1,  0],
+    [ 1,  0],
+    [-1,  1],
+    [ 0,  1],
+    [ 1,  1]
+  ]
+
+  def each_neighbor(x, y)
+    point = [0, 0]
+    NEIGHBOR_OFFSETS.each do |offsets|
+      point[0] = x + offsets[0]
+      point[1] = y + offsets[1]
+      yield(point)
+    end
+  end
+
   # Return the first point with the given color around given coordinates.
   def point_with_color_around(color, origin_point, points_to_ignore = [])
-    x, y = origin_point
-
-    [
-      [ x - 1, y - 1 ],
-      [ x,     y - 1 ],
-      [ x + 1, y - 1 ],
-      [ x - 1, y     ],
-      [ x + 1, y     ],
-      [ x - 1, y + 1 ],
-      [ x,     y + 1 ],
-      [ x + 1, y + 1 ]
-    ].each do |point|
+    each_neighbor(*origin_point) do |point|
       return point if !points_to_ignore.include?(point) && @image.pixel_color(*point) == color
     end
-
     nil
   end
 end
